@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Sign in · Northstar Identity</title>
+  <link rel="stylesheet" th:href="@{/css/auth.css}" href="/css/auth.css">
+</head>
+<body class="auth-shell">
+  <a class="skip-link" href="#main">Skip to sign in</a>
+  <main id="main" class="auth-layout">
+    <section class="brand-panel" aria-label="Northstar Identity">
+      <a class="brand" href="/" aria-label="Northstar Identity home"><span class="brand-mark" aria-hidden="true">N</span><span>northstar<span class="brand-light"> identity</span></span></a>
+      <div class="brand-copy">
+        <p class="eyebrow">A clearer way in</p>
+        <h1>Your work,<br>within reach.</h1>
+        <p class="brand-description">One secure sign-in for the tools and teams you rely on.</p>
+      </div>
+      <div class="brand-footer"><span class="status-dot" aria-hidden="true"></span> Secure identity, built around you</div>
+      <div class="orbit orbit-one" aria-hidden="true"></div><div class="orbit orbit-two" aria-hidden="true"></div>
+    </section>
+    <section class="form-panel" aria-labelledby="welcome-title">
+      <div class="mobile-brand"><span class="brand-mark" aria-hidden="true">N</span> northstar identity</div>
+      <div class="form-wrap">
+        <p class="eyebrow form-eyebrow">Welcome back</p>
+        <h2 id="welcome-title">Sign in to continue</h2>
+        <p class="form-subtitle">Use your account details to access your workspace.</p>
+        <div class="notice notice-error" role="alert" aria-live="assertive" th:if="${param.error}">We couldn’t sign you in with those details. Check them and try again.</div>
+        <div class="notice notice-success" role="status" th:if="${param.logout}">You’re signed out. Come back any time.</div>
+        <form class="sign-in-form" th:action="@{/login}" method="post">
+          <div class="field"><label for="username">Email or username</label><input id="username" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required autofocus aria-describedby="username-hint"><span id="username-hint" class="field-hint">Enter the username associated with your account.</span></div>
+          <div class="field"><div class="label-row"><label for="password">Password</label><span class="secure-label"><span aria-hidden="true">●</span> Secure sign in</span></div><input id="password" name="password" type="password" autocomplete="current-password" required></div>
+          <button class="button button-primary" type="submit">Continue <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="privacy-note"><span class="lock-icon" aria-hidden="true">◆</span> Your credentials are encrypted and never shared with the app.</p>
+      </div>
+      <footer class="form-footer"><span>© 2026 Northstar Identity</span><a href="mailto:support@example.com">Need help?</a></footer>
+    </section>
+  </main>
+</body>
+</html>

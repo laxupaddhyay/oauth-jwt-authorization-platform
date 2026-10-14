@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' http://localhost:9000; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' http://localhost:9000 http://localhost:8081">
+  <title>Northstar · Secure sign-in demo</title><link rel="stylesheet" href="./app.css"><script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="./" aria-label="Northstar demo home"><span class="brand-mark" aria-hidden="true">N</span><span>northstar<span class="brand-soft"> / demo</span></span></a><span class="demo-tag"><i aria-hidden="true"></i> OAuth 2.0 + PKCE</span></header>
+  <main class="container">
+    <section class="hero"><div><p class="kicker">YOUR IDENTITY, YOUR CONTROL</p><h1>Secure access,<br><span>without the friction.</span></h1><p class="lede">See how a public client signs in through the authorization server using a one-time PKCE challenge. Your password stays with the identity provider.</p></div><div class="hero-orbit" aria-hidden="true"><span class="orbit-ring ring-a"></span><span class="orbit-ring ring-b"></span><span class="orbit-core">N</span><span class="orbit-node node-a">↗</span><span class="orbit-node node-b">✓</span></div></section>
+    <section class="workspace" aria-label="Authorization flow demo">
+      <div class="panel setup-panel"><div class="panel-heading"><div><p class="kicker">01 / CONNECT</p><h2>Demo settings</h2></div><span class="step-badge">01</span></div>
+        <p class="panel-description">Use a registered public client. No client secret belongs in a browser app.</p>
+        <form id="settings-form" class="settings-form">
+          <label>Authorization server URL<input id="issuer" type="url" value="http://localhost:9000" autocomplete="url" required></label>
+          <label>Public client ID<input id="client-id" type="text" value="demo-spa" autocomplete="off" required></label>
+          <label>Redirect URI<input id="redirect-uri" type="url" readonly></label>
+          <label>Resource API URL<input id="api-url" type="url" value="http://localhost:8081/api/hello"></label>
+          <fieldset class="scope-picker"><legend>Ask for access to</legend><label><input type="checkbox" name="scope" value="openid" checked> Identity sign-in</label><label><input type="checkbox" name="scope" value="profile" checked> Basic profile</label><label><input type="checkbox" name="scope" value="email"> Email address</label></fieldset>
+          <button class="button button-primary" type="submit">Sign in securely <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="small-note"><span aria-hidden="true">▣</span> The demo stores only temporary state and the PKCE verifier for the redirect round-trip. Tokens stay in memory.</p>
+      </div>
+      <div class="panel result-panel"><div class="panel-heading"><div><p class="kicker">02 / YOUR SESSION</p><h2>Connected app</h2></div><span class="connection-pill" id="connection-pill"><i></i><span>Not connected</span></span></div>
+        <div id="status" class="status-box" role="status" aria-live="polite"><span class="status-icon" aria-hidden="true">↗</span><div><strong>Ready when you are</strong><p>Start sign-in to continue at your authorization server.</p></div></div>
+        <div class="session-content" id="session-content" hidden><div class="profile-card"><div class="avatar" id="avatar">N</div><div><strong id="user-name">Signed-in user</strong><span id="user-email">Profile loaded from userinfo</span></div><span class="verified" aria-label="Verified session">✓</span></div><div class="session-meta"><div><span>Granted scopes</span><strong id="granted-scopes">—</strong></div><div><span>Access token expires</span><strong id="expires-at">—</strong></div></div><div class="api-result"><div class="api-title"><span class="api-pulse"></span><span>Protected API</span></div><pre id="api-output">Waiting for access token</pre></div><button class="button button-secondary" id="disconnect" type="button">Clear this session</button></div>
+        <div class="flow-strip"><span><b>1</b> Create verifier</span><span class="flow-line" aria-hidden="true"></span><span><b>2</b> Authorize</span><span class="flow-line" aria-hidden="true"></span><span><b>3</b> Exchange code</span></div>
+        <p class="security-foot">This browser demo uses Authorization Code + PKCE (S256). It never sends a client secret.</p>
+      </div>
+    </section>
+    <footer class="page-footer"><span>Northstar Identity demo</span><a href="http://localhost:9000/.well-known/openid-configuration" target="_blank" rel="noreferrer">View OpenID configuration ↗</a></footer>
+  </main>
+  <div class="toast" id="toast" role="alert" hidden></div>
+</body>
+</html>

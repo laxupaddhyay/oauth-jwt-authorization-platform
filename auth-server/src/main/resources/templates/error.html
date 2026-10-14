@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><title>Something went wrong · Northstar Identity</title><link rel="stylesheet" th:href="@{/css/auth.css}" href="/css/auth.css"></head>
+<body class="auth-shell error-shell"><main class="error-card" aria-labelledby="error-title"><a class="brand" href="/" aria-label="Northstar Identity"><span class="brand-mark" aria-hidden="true">N</span><span>northstar<span class="brand-light"> identity</span></span></a><div class="error-symbol" aria-hidden="true">!</div><p class="eyebrow centered">A brief interruption</p><h1 id="error-title">We couldn’t complete that request.</h1><p class="error-copy">Something didn’t go as expected. Your sign-in details are safe. Try again, or return to the application that sent you here.</p><p class="error-code" th:if="${status}">Reference status <span th:text="${status}">500</span></p><a class="button button-primary error-button" href="/login">Return to sign in</a><a class="support-link" href="mailto:support@example.com">Contact support</a><p class="consent-footer">Protected by <strong>northstar identity</strong></p></main></body>
+</html>
+

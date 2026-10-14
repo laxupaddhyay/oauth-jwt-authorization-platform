@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light"><title>Review access · Northstar Identity</title>
+  <link rel="stylesheet" th:href="@{/css/auth.css}" href="/css/auth.css">
+</head>
+<body class="auth-shell consent-shell">
+  <a class="skip-link" href="#main">Skip to access review</a>
+  <main id="main" class="consent-card" aria-labelledby="consent-title">
+    <a class="brand consent-brand" href="/" aria-label="Northstar Identity"><span class="brand-mark" aria-hidden="true">N</span><span>northstar<span class="brand-light"> identity</span></span></a>
+    <div class="consent-app-icon" aria-hidden="true">↗</div>
+    <p class="eyebrow centered">Permission review</p>
+    <h1 id="consent-title"><span th:text="${clientId}">This application</span> wants access</h1>
+    <p class="consent-intro">Choose what you’re comfortable sharing. You can change access later in your account settings.</p>
+    <form th:action="@{/oauth2/authorize}" method="post" class="consent-form">
+      <input type="hidden" name="client_id" th:value="${clientId}"><input type="hidden" name="state" th:value="${state}">
+      <fieldset><legend>Requested permissions</legend>
+        <label class="scope-row" th:each="scope : ${scopes}">
+          <input type="checkbox" name="scope" th:value="${scope}" checked>
+          <span class="scope-check" aria-hidden="true">✓</span>
+          <span class="scope-copy"><strong th:text="${scope}">profile</strong><span th:switch="${scope}"><span th:case="'openid'">Confirm your identity and sign-in status.</span><span th:case="'profile'">View your basic profile information.</span><span th:case="'email'">View your email address.</span><span th:case="'offline_access'">Keep access between visits using refresh tokens.</span><span th:case="*">Access the requested account permission.</span></span></span>
+        </label>
+      </fieldset>
+      <p class="consent-footnote"><span aria-hidden="true">ⓘ</span> Only approve access for apps you recognize.</p>
+      <div class="consent-actions"><button class="button button-primary" type="submit" name="user_oauth_approval" value="true">Approve access</button><button class="button button-secondary" type="submit" name="user_oauth_approval" value="false">Cancel</button></div>
+    </form>
+    <p class="consent-footer">Protected by <strong>northstar identity</strong></p>
+  </main>
+</body>
+</html>

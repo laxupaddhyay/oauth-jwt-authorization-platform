@@ -1,0 +1,78 @@
+server:
+  port: 9000
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: ${SESSION_COOKIE_SECURE:true}
+        same-site: lax
+spring:
+  application:
+    name: authorization-server
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: ${DB_POOL_MAX_SIZE:20}
+      minimum-idle: 5
+      connection-timeout: 30000
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.jdbc.time_zone: UTC
+      hibernate.jdbc.batch_size: 50
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: false
+  session:
+    timeout: 30m
+authserver:
+  issuer: ${AUTH_ISSUER}
+  tokens:
+    access-token-ttl: 10m
+    refresh-token-ttl: 14d
+    authorization-code-ttl: 5m
+    id-token-ttl: 10m
+  keys:
+    rotation-interval: 30d
+    retire-grace-period: 1d
+    encryption-secret: ${KEY_ENCRYPTION_SECRET}
+  admin:
+    bootstrap-token: ${ADMIN_BOOTSTRAP_TOKEN}
+  rate-limit:
+    login-per-minute: 10
+    token-per-minute: 60
+  demo-spa-origin: ${DEMO_SPA_ORIGIN:http://localhost:4173}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+server:
+  servlet:
+    session:
+      cookie:
+        secure: false
+---
+spring:
+  config:
+    activate:
+      on-profile: redis
+  session:
+    store-type: redis
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
